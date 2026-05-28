@@ -1054,33 +1054,68 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Curtain wipe transition */
-  #ov-curtain {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    background: #3D0505;
-    transform-origin: top;
-    transform: scaleY(0);
-    pointer-events: none;
+  /* ── BLOOM TRANSITION ── */
+  #ov-flash {
+    position: fixed; inset: 0; z-index: 10002;
+    background: radial-gradient(circle at 50% 50%, rgba(232,184,75,0.95) 0%, rgba(200,146,42,0.6) 30%, transparent 70%);
+    opacity: 0; pointer-events: none; transform: scale(0.2);
+  }
+  #ov-flash.burst { animation: flashBurst 0.65s cubic-bezier(0.22,1,0.36,1) forwards; }
+  @keyframes flashBurst {
+    0%   { opacity:0;   transform:scale(0.2); }
+    35%  { opacity:0.9; transform:scale(1); }
+    100% { opacity:0;   transform:scale(2.8); }
   }
 
-  #ov-curtain.wipe {
-    animation: curtainWipe 1.4s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  #ov-petals { position:fixed; inset:0; z-index:10001; pointer-events:none; display:none; }
+  #ov-petals.bloom { display:block; }
+  .ov-panel {
+    position:absolute;
+    background: radial-gradient(ellipse at 50% 50%, #5C0A0A 0%, #2A0505 55%, #1A0303 100%);
+    opacity:1;
   }
+  .ov-panel.p0 { top:0;    left:0;  right:0;  height:50%; clip-path:polygon(0 0,100% 0,62% 100%,38% 100%); }
+  .ov-panel.p1 { bottom:0; left:0;  right:0;  height:50%; clip-path:polygon(38% 0,62% 0,100% 100%,0 100%); }
+  .ov-panel.p2 { top:0;    bottom:0;left:0;   width:50%;  clip-path:polygon(0 0,100% 38%,100% 62%,0 100%); }
+  .ov-panel.p3 { top:0;    bottom:0;right:0;  width:50%;  clip-path:polygon(0 38%,100% 0,100% 100%,0 62%); }
+  .ov-panel.p4 { top:0;    left:0;  width:50%;height:50%; clip-path:polygon(0 0,100% 0,0 100%); }
+  .ov-panel.p5 { top:0;    right:0; width:50%;height:50%; clip-path:polygon(0 0,100% 0,100% 100%); }
+  .ov-panel.p6 { bottom:0; left:0;  width:50%;height:50%; clip-path:polygon(0 0,100% 100%,0 100%); }
+  .ov-panel.p7 { bottom:0; right:0; width:50%;height:50%; clip-path:polygon(100% 0,100% 100%,0 100%); }
 
-  @keyframes curtainWipe {
-    0%   { transform: scaleY(1); transform-origin: bottom; }
-    45%  { transform: scaleY(1); transform-origin: bottom; }
-    46%  { transform-origin: top; }
-    100% { transform: scaleY(0); transform-origin: top; }
-  }
+  #ov-petals.bloom .ov-panel.p0 { animation: flyTop    0.95s cubic-bezier(0.55,-0.05,0.4,1.15) 0.06s forwards; }
+  #ov-petals.bloom .ov-panel.p1 { animation: flyBottom 0.95s cubic-bezier(0.55,-0.05,0.4,1.15) 0.06s forwards; }
+  #ov-petals.bloom .ov-panel.p2 { animation: flyLeft   0.95s cubic-bezier(0.55,-0.05,0.4,1.15) 0.03s forwards; }
+  #ov-petals.bloom .ov-panel.p3 { animation: flyRight  0.95s cubic-bezier(0.55,-0.05,0.4,1.15) 0.03s forwards; }
+  #ov-petals.bloom .ov-panel.p4 { animation: flyTL     0.95s cubic-bezier(0.55,-0.05,0.4,1.15) 0s   forwards; }
+  #ov-petals.bloom .ov-panel.p5 { animation: flyTR     0.95s cubic-bezier(0.55,-0.05,0.4,1.15) 0s   forwards; }
+  #ov-petals.bloom .ov-panel.p6 { animation: flyBL     0.95s cubic-bezier(0.55,-0.05,0.4,1.15) 0s   forwards; }
+  #ov-petals.bloom .ov-panel.p7 { animation: flyBR     0.95s cubic-bezier(0.55,-0.05,0.4,1.15) 0s   forwards; }
+
+  @keyframes flyTop    { to { transform:translateY(-115%) scaleY(1.2); opacity:0; } }
+  @keyframes flyBottom { to { transform:translateY(115%)  scaleY(1.2); opacity:0; } }
+  @keyframes flyLeft   { to { transform:translateX(-115%) scaleX(1.2); opacity:0; } }
+  @keyframes flyRight  { to { transform:translateX(115%)  scaleX(1.2); opacity:0; } }
+  @keyframes flyTL     { to { transform:translate(-115%,-115%) scale(1.15); opacity:0; } }
+  @keyframes flyTR     { to { transform:translate(115%,-115%)  scale(1.15); opacity:0; } }
+  @keyframes flyBL     { to { transform:translate(-115%,115%)  scale(1.15); opacity:0; } }
+  @keyframes flyBR     { to { transform:translate(115%,115%)   scale(1.15); opacity:0; } }
 </style>
 </head>
 <body class="overlay-open">
 
 <!-- ══ OVERLAY ══ -->
-<div id="ov-curtain"></div>
+<div id="ov-flash"></div>
+<div id="ov-petals">
+  <div class="ov-panel p0"></div>
+  <div class="ov-panel p1"></div>
+  <div class="ov-panel p2"></div>
+  <div class="ov-panel p3"></div>
+  <div class="ov-panel p4"></div>
+  <div class="ov-panel p5"></div>
+  <div class="ov-panel p6"></div>
+  <div class="ov-panel p7"></div>
+</div>
 <div id="overlay">
   <div class="mandala-bg">
     <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
@@ -1174,15 +1209,14 @@
     </button>
 
     <div class="ov-orn-line"><span class="ov-orn-dot">✦</span></div>
-
-    <p class="ov-hint">CLICK TO OPEN WITH MUSIC</p>
   </div>
 </div>
 
 <script>
 function openInvitation(e) {
-  // Ripple effect
+  // Ripple on button
   var btn = document.getElementById('ovOpenBtn');
+  btn.disabled = true;
   var r = document.createElement('span');
   r.className = 'ov-ripple';
   var rect = btn.getBoundingClientRect();
@@ -1206,20 +1240,27 @@ function openInvitation(e) {
     window.autoStarted  = true;
   }
 
-  // Curtain wipe
-  document.getElementById('ov-curtain').classList.add('wipe');
+  // 1. Golden flash from centre
+  document.getElementById('ov-flash').classList.add('burst');
 
-  // Fade out overlay and unlock scroll
+  // 2. Panels bloom outward (slight delay so flash leads)
+  setTimeout(function() {
+    document.getElementById('ov-petals').classList.add('bloom');
+  }, 80);
+
+  // 3. Fade the overlay card itself
   setTimeout(function() {
     document.getElementById('overlay').classList.add('hiding');
     document.body.classList.remove('overlay-open');
-  }, 600);
+  }, 250);
 
-  // Remove overlay from DOM
+  // 4. Clean up
   setTimeout(function() {
     var ov = document.getElementById('overlay');
     if (ov) ov.style.display = 'none';
-  }, 1500);
+    var petals = document.getElementById('ov-petals');
+    if (petals) petals.style.display = 'none';
+  }, 1200);
 }
 </script>
 <!-- ══ END OVERLAY ══ -->
@@ -1734,7 +1775,7 @@ function toggleMusic() {
   }
 }
 
-// Autoplay on first user interaction
+// Music starts automatically when the overlay is opened
 var autoStarted = false;
 function autoStart(e) {
   if (autoStarted) return;
