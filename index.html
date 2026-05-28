@@ -886,8 +886,8 @@
         <div class="detail-content">
           <span class="label-en">Venue</span>
           <span class="label-mr">कार्यस्थळ</span>
-          <span class="value">Shri Radhemandam Keshav Balaji Mandir</span>
-          <span class="value-mr">श्री राधेमंडपम केशव वालाजी मंदिर</span>
+          <span class="value">Shri Radhamandapam Keshav Balaji Mandir</span>
+          <span class="value-mr">श्री राधेमंडपम केशव बालाजी मंदिर</span>
           <span class="value-mr">औसा, ता. औसा, जि. लातूर</span>
         </div>
       </div>
@@ -947,7 +947,7 @@
     <div class="family-grid reveal">
 
       <div class="family-card">
-        <div class="family-card-title">॥ आपले विनित ॥ · Hosts</div>
+        <div class="family-card-title">॥ आपले विनम्र ॥ · Hosts</div>
         <ul class="family-name-list">
           <li><span class="name">सौ. सविता</span></li>
           <li><span class="name">विजयकुमार भगवानराव कुलकर्णी</span></li>
@@ -972,7 +972,7 @@
       </div>
 
       <div class="family-card">
-        <div class="family-card-title">॥ स्वागतोत्सुक ॥ · Welcomers</div>
+        <div class="family-card-title">॥ स्वागतकर्ते ॥ · Welcomers</div>
         <ul class="family-name-list">
           <li><span class="name">सौ. जयश्री व श्री. संदेशराव देशपांडे</span></li>
           <li><span class="name">सौ. पद्मजा व श्री. दत्तात्रय कुलकर्णी</span></li>
@@ -1011,8 +1011,8 @@
   <div class="venue-card reveal">
     <div class="venue-header">
       <span class="icon">🛕</span>
-      <span class="venue-name-mr">श्री राधेमंडपम केशव वालाजी मंदिर</span>
-      <span class="venue-name-en">Shri Radhemandam Keshav Balaji Mandir</span>
+      <span class="venue-name-mr">श्री राधेमंडपम केशव बालाजी मंदिर</span>
+      <span class="venue-name-en">Shri Radhamandapam Keshav Balaji Mandir</span>
     </div>
     <div class="venue-body">
       <div class="venue-detail">
@@ -1036,12 +1036,12 @@
         <div class="venue-detail-text">
           <span class="label">Contact</span>
           <span class="val-mr">मो. ९७६७१३०५०८</span>
-          <span class="val-en">8767204405 · 8805513329</span>
+          <span class="val-en">मो. ८७६७२०४४०५ · मो. ८८०५५१३३२९</span>
         </div>
       </div>
 
       <div class="contact-btns">
-        <a href="https://maps.google.com/?q=Shri+Radhemandam+Keshav+Balaji+Mandir+Ausa+Latur+Maharashtra" class="contact-btn primary" target="_blank">🗺️ Get Directions</a>
+        <a href="https://maps.google.com/?q=Shri+Radhamandapam+Keshav+Balaji+Mandir+Ausa+Latur+Maharashtra" class="contact-btn primary" target="_blank">🗺️ Get Directions</a>
       </div>
     </div>
   </div>
@@ -1169,6 +1169,109 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 reveals.forEach(r => observer.observe(r));
+</script>
+<!-- ═══ MUSIC PLAYER ═══ -->
+<div id="music-player" style="
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(61,5,5,0.97), rgba(92,10,10,0.97));
+  border: 1px solid rgba(200,146,42,0.5);
+  border-radius: 50px;
+  padding: 10px 20px 10px 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(200,146,42,0.15);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+">
+  <button id="music-btn" onclick="toggleMusic()" style="
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(200,146,42,0.7);
+    background: rgba(200,146,42,0.15);
+    color: #E8B84B;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  ">▶</button>
+  <div>
+    <div id="music-label" style="font-family: 'Noto Sans Devanagari', sans-serif; font-size: 0.75rem; color: #E8B84B; font-weight: 600; white-space: nowrap;">एकदंताय वक्रतुंडाय</div>
+    <div style="font-family: 'Cinzel Decorative', serif; font-size: 0.55rem; color: rgba(200,146,42,0.6); letter-spacing: 0.1em; white-space: nowrap;">Ganesh Aarti</div>
+  </div>
+  <div id="music-bars" style="display: none; align-items: center; gap: 2px; height: 20px; margin-left: 4px;">
+    <span class="bar" style="width:3px; background:#E8B84B; border-radius:2px; animation: barAnim 0.8s ease-in-out infinite;"></span>
+    <span class="bar" style="width:3px; background:#E8B84B; border-radius:2px; animation: barAnim 0.8s ease-in-out 0.15s infinite;"></span>
+    <span class="bar" style="width:3px; background:#E8B84B; border-radius:2px; animation: barAnim 0.8s ease-in-out 0.3s infinite;"></span>
+    <span class="bar" style="width:3px; background:#E8B84B; border-radius:2px; animation: barAnim 0.8s ease-in-out 0.45s infinite;"></span>
+  </div>
+</div>
+
+<!-- Native HTML5 Audio -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="ganesh_aarti.mp3" type="audio/mpeg">
+</audio>
+
+<style>
+@keyframes barAnim {
+  0%, 100% { height: 4px; }
+  50% { height: 18px; }
+}
+#music-player:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,146,42,0.3); }
+#music-btn:hover { background: rgba(200,146,42,0.3) !important; transform: scale(1.1); }
+</style>
+
+<script>
+var audio = document.getElementById('bg-audio');
+var musicPlaying = false;
+var seeked = false;
+
+// Seek to 50s once enough data is loaded
+audio.addEventListener('canplay', function() {
+  if (!seeked) {
+    seeked = true;
+    try { audio.currentTime = 45; } catch(e) {}
+  }
+});
+
+function toggleMusic() {
+  var btn = document.getElementById('music-btn');
+  var bars = document.getElementById('music-bars');
+  if (musicPlaying) {
+    audio.pause();
+    musicPlaying = false;
+    btn.textContent = '▶';
+    if (bars) bars.style.display = 'none';
+  } else {
+    audio.volume = 1.0
+    audio.play().then(function() {
+      musicPlaying = true;
+      btn.textContent = '⏸';
+      if (bars) bars.style.display = 'flex';
+    }).catch(function(e) {
+      console.log('Playback error:', e);
+    });
+  }
+}
+
+// Autoplay on first user interaction
+var autoStarted = false;
+function autoStart(e) {
+  if (autoStarted) return;
+  if (e.target && e.target.id === 'music-btn') return;
+  autoStarted = true;
+  document.removeEventListener('click', autoStart);
+  document.removeEventListener('touchend', autoStart);
+  toggleMusic();
+}
+document.addEventListener('click', autoStart);
+document.addEventListener('touchend', autoStart);
 </script>
 </body>
 </html>
